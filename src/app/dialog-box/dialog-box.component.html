@@ -1,0 +1,39 @@
+<div>
+<h1 mat-dialog-title>Update</h1>
+
+<div mat-dialog-content>
+    <mat-form-field>
+        <input  placeholder="Name" matInput [(ngModel)]="localData.name" >
+    </mat-form-field>
+    <mat-form-field>
+        <input placeholder="Email" matInput [(ngModel)]="localData.email" >
+    </mat-form-field>
+    <mat-form-field>
+        <input placeholder="Location" matInput [(ngModel)]="localData.location" >
+    </mat-form-field>
+        
+      
+    <mat-form-field>
+        <input placeholder="Services" matInput [(ngModel)]="localData.services" >
+    </mat-form-field>
+    <mat-form-field>
+        <input placeholder="Date" matInput [(ngModel)]="localData.date" >
+    </mat-form-field>
+    <mat-form-field>
+        <input placeholder="Contact Person" matInput [(ngModel)]="localData.contactPerson" >
+    </mat-form-field>
+    <mat-form-field>
+        <input placeholder="Contact Email" matInput [(ngModel)]="localData.contactEmail" >
+    </mat-form-field>
+    <mat-form-field>
+        <input placeholder="Website" matInput [(ngModel)]="localData.website" >
+    </mat-form-field>
+    <div mat-dialog-actions>
+        <button mat-button color="warn" (click)="doAction()">Update</button>
+   
+    
+        <button mat-button color="primary" (click)="closeDialog()">Cancel</button>
+    </div>
+</div>
+
+</div>

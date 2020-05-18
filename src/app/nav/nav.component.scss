@@ -1,0 +1,47 @@
+$right-padding: 1rem;
+
+$nav-bg-color:#00B3F9;
+$top: 1em;
+$display: inline-block;
+$colors: (
+    blue: #58a5fd,
+    green: #36d8b6,
+    yellow: #fdc165,
+    pink: #f8697e
+
+);
+
+.navbar{
+    background-color:$nav-bg-color ;
+    flex: 1 1 auto;
+    justify-self: center;
+    
+    //badge and help icon
+    mat-toolbar-row{
+        justify-content: space-between;
+        div{
+            // button{
+            //     outline: !important
+
+            // }
+        }
+     
+    }
+    //Welcome paragraph heading
+    mat-toolbar-row{
+        span{
+            margin:auto;
+        }
+    }
+    //welcome p body
+    mat-toolbar-row{
+        .body{
+            
+            p{
+            text-overflow: ellipsis;
+            }
+        }
+    }
+    
+
+}
