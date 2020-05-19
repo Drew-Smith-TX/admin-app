@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, ViewChild, AfterViewInit, ElementRef, TemplateRef } from '@angular/core';
+import { Component, OnInit, OnChanges, ViewChild, AfterViewChecked, ElementRef, TemplateRef } from '@angular/core';
 import { CardService } from '../_service/card.service';
 import { ConfirmDialogModel } from '../_models/confirm-dialog-model';
 import { ConfirmationDialogComponent } from '../dialog-box/confirmation-dialog/confirmation-dialog.component'
@@ -9,6 +9,8 @@ import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
 import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
 import { NewCustomerComponent } from '../dialog-box/new-customer/new-customer.component';
+import { NavComponent } from '../nav/nav.component';
+import { HeaderService } from '../_service/header.service';
 
 
 
@@ -19,9 +21,9 @@ import { NewCustomerComponent } from '../dialog-box/new-customer/new-customer.co
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
-export class CustomersComponent implements OnInit, OnChanges {
+export class CustomersComponent implements OnInit, OnChanges, AfterViewChecked {
 
-
+  @ViewChild(NavComponent, {static: false}) navBar: NavComponent;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   tempCustomer: Customer;
@@ -41,11 +43,12 @@ export class CustomersComponent implements OnInit, OnChanges {
   ];
   constructor(public cardService: CardService,
               private service: ServerService,
-              public dialog: MatDialog) {
+              public dialog: MatDialog,
+              public head: HeaderService) {
     console.log('constructor');
     this.cardService.setSelectedIndex(1);
     this.cardService.setTitle('Customer Management');
-
+    this.head.title = 'Customer Management';
   }
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class CustomersComponent implements OnInit, OnChanges {
     if (window.screen.width < 500) {
       this.mobile = true;
     }
+    
   }
 
   ngOnChanges() {
@@ -63,7 +67,10 @@ export class CustomersComponent implements OnInit, OnChanges {
     this.cardService.setSelectedIndex(1);
     this.cardService.setTitle('Customer Management');
   }
-
+  ngAfterViewChecked() {
+  
+    
+  }
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
