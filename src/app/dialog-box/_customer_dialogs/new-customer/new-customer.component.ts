@@ -4,7 +4,8 @@ import { Customer } from 'src/app/_models/customer';
 import { FormControl, FormGroup, Validators, Form } from '@angular/forms';
 import { ServerService } from 'src/app/_service/server.service';
 import { Service } from 'src/app/_models/service';
-
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 @Component({
   selector: 'app-new-customer',
   templateUrl: './new-customer.component.html',
@@ -21,6 +22,7 @@ export class NewCustomerComponent implements OnInit {
   dateCtl: FormControl;
   contactPersonCtl: FormControl;
   contactEmailCtl: FormControl;
+  descriptionCtl: FormControl;
   websiteCtl: FormControl;
   constructor(public dialogRef: MatDialogRef < NewCustomerComponent > ,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: Customer,
@@ -30,15 +32,15 @@ export class NewCustomerComponent implements OnInit {
     this.localData = { ...data };
 
     // Create controls for each element of the Customer class
-    this.nameCtl = new FormControl('Name', Validators.required);
-    this.emailCtl = new FormControl('Email',[ Validators.required, Validators.email]);
-    this.locationCtl = new FormControl('Location', Validators.required);
-    this.serviceCtl = new FormControl('Select', Validators.nullValidator);
-    this.dateCtl = new FormControl('yyyy-MM-dd', Validators.required);
+    this.nameCtl = new FormControl('', Validators.required);
+    this.emailCtl = new FormControl('',[ Validators.required, Validators.email]);
+    this.locationCtl = new FormControl('', Validators.required);
+    this.serviceCtl = new FormControl('', Validators.nullValidator);
+    this.dateCtl = new FormControl('', Validators.required);
     this.contactPersonCtl = new FormControl('', Validators.required);
-    this.contactEmailCtl = new FormControl('Contact Email', Validators.required);
-    this.websiteCtl = new FormControl('Website', Validators.required);
-    
+    this.contactEmailCtl = new FormControl('', [Validators.required, Validators.email]);
+    this.websiteCtl = new FormControl('', Validators.required);
+    this.descriptionCtl = new FormControl('', Validators.required);
     // Create form group containing controls
     this.customerForm = new FormGroup({
       name: this.nameCtl,
@@ -48,7 +50,8 @@ export class NewCustomerComponent implements OnInit {
       date: this.dateCtl,
       contactPerson: this.contactPersonCtl,
       contactEmail: this.contactEmailCtl,
-      website: this.websiteCtl
+      website: this.websiteCtl,
+      description: this.descriptionCtl
     });
     this.getServices();
   }

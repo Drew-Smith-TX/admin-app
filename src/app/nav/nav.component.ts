@@ -4,6 +4,7 @@ import { CardService } from '../_service/card.service';
 import {ChangeDetectorRef} from '@angular/core';
 import { AppComponent } from '../app.component';
 import { HeaderService } from '../_service/header.service';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-nav',
@@ -16,28 +17,31 @@ export class NavComponent implements AfterContentInit, OnChanges, OnInit, AfterV
   // subscription: Subscription;
   @ViewChild(AppComponent) root: AppComponent;
   monitorTitle: string;
+  titleObservable: Observable<string>;
   constructor(public cardService: CardService,
               private headService: HeaderService,
               public cdr: ChangeDetectorRef) { 
-                this.monitorTitle = this.headService.title;
+               
   }
   ngOnInit(){
-    this.monitorTitle = this.headService.title;
+   this.titleObservable = this.headService.titleSubject.asObservable();
+   this.titleObservable.subscribe((title) =>{
+     this.monitorTitle = title;
+     console.log('Title set')
+     console.log(this.monitorTitle);
+   })
   }
   ngAfterViewChecked(): void {
-    //this.monitorTitle = this.headService.title;
+    
    }
    ngAfterViewInit(){
-     this.monitorTitle = this.headService.title;
-     this.cdr.detectChanges();
+     
    }
    ngOnChanges(){
-     this.monitorTitle = this.headService.title;
-     this.cdr.detectChanges();
+    
    }
    ngAfterContentInit() {
-     this.monitorTitle = this.headService.title;
-     this.cdr.detectChanges();
+     
    }
   
 

@@ -15,7 +15,7 @@ $colors: (
     background-color:$nav-bg-color ;
     flex: 1 1 auto;
     justify-self: center;
-    
+    border-radius: 6px;
     //badge and help icon
     mat-toolbar-row{
         justify-content: space-between;

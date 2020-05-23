@@ -1,0 +1,102 @@
+<mat-card>
+  <span class="container">
+    <form [formGroup]="customerForm">
+      <mat-card-title fxLayout="center center">
+        Add New Customer
+      </mat-card-title>
+      <br>
+      <mat-card-content f>
+        <!--Name Field-->
+        <div>
+          <mat-form-field>
+            <br>
+            <mat-label>Name</mat-label>
+            <span>
+              <input required matInput type="text" formControlName="name" placeholder="Customer Name">
+              <mat-icon color="warn" *ngIf="nameCtl.invalid && nameCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+        <!-- Email Field-->
+        <div>
+          <mat-form-field>
+            <mat-label>Email</mat-label>
+            <span>
+              <input required matInput type="email" formControlName="email" placeholder="Enter Email">
+              <mat-icon color="warn" *ngIf="emailCtl.invalid && emailCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+        <!--Location Field-->
+        <div>
+          <mat-form-field>
+            <mat-label>Location</mat-label>
+            <span>
+              <input required matInput type="text" formControlName="location" placeholder="Enter Location">
+              <mat-icon color="warn" *ngIf="locationCtl.invalid && locationCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+        <!-- Date Field-->
+        <div>
+          <mat-form-field>
+            <mat-label>Date</mat-label>
+            <span>
+              <input required matInput [matDatepicker]="picker" formControlName="date" placeholder="Enter Date">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-icon #picker color="warn" *ngIf="dateCtl.invalid && dateCtl.touched">warning</mat-icon>
+              <mat-datepicker #picker class="dp"></mat-datepicker>
+            </span>
+          </mat-form-field>
+        </div>
+
+        <!--Contact Person-->
+        <div>
+          <mat-form-field>
+            <mat-label>Contact Person</mat-label>
+            <span>
+              <input required matInput type="email" formControlName="contactPerson" placeholder="Enter Contact Person">
+              <mat-icon color="warn" *ngIf="contactEmailCtl.invalid && contactEmailCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+
+        <div>
+          <mat-form-field>
+            <mat-label>Contact Email</mat-label>
+            <span>
+              <input required matInput type="email" formControlName="contactEmail" placeholder="Enter Contact Email">
+              <mat-icon color="warn" *ngIf="contactEmailCtl.invalid && contactEmailCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+        <div>
+          <mat-form-field>
+            <mat-label>Service</mat-label>
+            <mat-select required matInput formControlName="service" placeholder="Select Services">
+              <mat-option *ngFor="let service of services" [value]="service.type">
+                {{service.type}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+       
+        <div>
+          <mat-form-field>
+            <mat-label>Description</mat-label>
+            <span>
+              <input required matInput type="text" formControlName="description" placeholder="Description">
+              <mat-icon color="warn" *ngIf="descriptionCtl.invalid && descriptionCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+
+        <button (click)="onConfirm()" [disabled]="customerForm.invalid" mat-raised-button
+          color="primaary">Submit</button>
+        <button (click)="onClose()" mat-raised-button color="accent">Cancel</button>
+      </mat-card-content>
+
+
+    </form>
+  </span>
+</mat-card>

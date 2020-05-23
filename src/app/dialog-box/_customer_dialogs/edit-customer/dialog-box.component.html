@@ -1,39 +1,65 @@
-<div>
-<h1 mat-dialog-title>Update</h1>
 
+ <div mat-dialog
+    fxFlex>
+<h1 mat-dialog-title>Update</h1>
+<br>
 <div mat-dialog-content>
     <mat-form-field>
         <input  placeholder="Name" matInput [(ngModel)]="localData.name" >
     </mat-form-field>
+    <br>
     <mat-form-field>
         <input placeholder="Email" matInput [(ngModel)]="localData.email" >
     </mat-form-field>
+    <br>
     <mat-form-field>
         <input placeholder="Location" matInput [(ngModel)]="localData.location" >
     </mat-form-field>
-        
-      
-    <mat-form-field>
-        <input placeholder="Services" matInput [(ngModel)]="localData.services" >
+    <br>
+    
+    
+    <mat-form-field
+        appearance="standard">
+        <mat-label>Service</mat-label>
+        <mat-select [(ngModel)]="localData.service" >
+            
+            <mat-option 
+                *ngFor="let i of service" 
+                placeholder="localData.service"
+                [value]="i.type">
+                    {{i.type}}
+            </mat-option>
+        </mat-select>
     </mat-form-field>
+ 
+    <br>
     <mat-form-field>
         <input placeholder="Date" matInput [(ngModel)]="localData.date" >
     </mat-form-field>
+    <br>
     <mat-form-field>
         <input placeholder="Contact Person" matInput [(ngModel)]="localData.contactPerson" >
     </mat-form-field>
+    <br>
     <mat-form-field>
         <input placeholder="Contact Email" matInput [(ngModel)]="localData.contactEmail" >
     </mat-form-field>
+    <br>
     <mat-form-field>
         <input placeholder="Website" matInput [(ngModel)]="localData.website" >
     </mat-form-field>
+    <br>
+    <mat-form-field>
+        <input placeholder="Description" matInput [(ngModel)]="localData.description" >
+    </mat-form-field>
+    <br>
     <div mat-dialog-actions>
-        <button mat-button color="warn" (click)="doAction()">Update</button>
+        <button mat-raised-button color="warn" (click)="doAction()">Update</button>
    
     
-        <button mat-button color="primary" (click)="closeDialog()">Cancel</button>
+        <button mat-raised-button color="primary" (click)="closeDialog()">Cancel</button>
     </div>
 </div>
 
-</div>
+</div> 
+

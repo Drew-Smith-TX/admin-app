@@ -4,6 +4,7 @@ import { CardInfo } from '../_models/card-info';
 import { EventEmitter } from '@angular/core';
 import { CardService } from '../_service/card.service';
 import {Subscription} from 'rxjs';
+import { HeaderService } from '../_service/header.service';
 
 @Component({
   selector: 'app-home',
@@ -11,22 +12,23 @@ import {Subscription} from 'rxjs';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  constructor(public cardService: CardService){}
   cardList: CardInfo[] ;
-breakpoint;
+  breakpoint;
+  constructor(public cardService: CardService,
+              public head: HeaderService){
+    this.head.setNextTitle('Welcome to Admin Managment');
+  }
+ 
 onResize(event) {
   this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
 }
 
 ngOnInit()  {
   this.cardList = this.cardService.getCardList();
-  this.cardService.setTitle(this.cardList[0].title);
   this.breakpoint = (window.innerWidth <= 400) ? 1 : 6;
  }
 
 navigate(index: number){
-  console.log(index);
-  this.cardService.setSelectedIndex(index);
-  this.cardService.setTitle(this.cardList[index].title);
+  
 }
 }

@@ -8,6 +8,7 @@ export class Customer {
     contactPerson: string;
     contactEmail: string;
     website: string;
+    description: string;
     constructor(init?: Partial<Customer>){
         Object.assign(this, init);
     }

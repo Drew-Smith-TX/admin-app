@@ -1,19 +1,16 @@
 import { Component, OnInit, OnChanges, ViewChild, AfterViewChecked, ElementRef, TemplateRef } from '@angular/core';
-import { CardService } from '../_service/card.service';
-import { ConfirmDialogModel } from '../_models/confirm-dialog-model';
-import { ConfirmationDialogComponent } from '../dialog-box/confirmation-dialog/confirmation-dialog.component'
 
-import { ServerService } from '../_service/server.service';
-import { Customer } from '../_models/customer';
 import { MatTable } from '@angular/material/table';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogBoxComponent } from '../dialog-box/dialog-box.component';
-import { NewCustomerComponent } from '../dialog-box/new-customer/new-customer.component';
+
+import { Customer } from '../_models/customer';
 import { NavComponent } from '../nav/nav.component';
 import { HeaderService } from '../_service/header.service';
-
-
-
+import { ConfirmDialogModel } from '../_models/confirm-dialog-model';
+import { ConfirmationDialogComponent } from '../dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
+import { DialogBoxComponent } from '../dialog-box/_customer_dialogs/edit-customer/dialog-box.component';
+import { NewCustomerComponent } from '../dialog-box/_customer_dialogs/new-customer/new-customer.component';
+import { ServerService } from '../_service/server.service';
 
 
 @Component({
@@ -21,14 +18,14 @@ import { HeaderService } from '../_service/header.service';
   templateUrl: './customers.component.html',
   styleUrls: ['./customers.component.scss']
 })
-export class CustomersComponent implements OnInit, OnChanges, AfterViewChecked {
+export class CustomersComponent implements OnInit, OnChanges {
 
   @ViewChild(NavComponent, {static: false}) navBar: NavComponent;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
 
   tempCustomer: Customer;
   dataSource: Customer[] = [];
-  titleSet = false;
+  
   result: boolean;
   mobile: boolean;
   // Columns to be displayed in the browser
@@ -39,43 +36,36 @@ export class CustomersComponent implements OnInit, OnChanges, AfterViewChecked {
     'website',
     'location',
     'services',
+    'description',
     'actions'
+   
   ];
-  constructor(public cardService: CardService,
+  constructor(
               private service: ServerService,
               public dialog: MatDialog,
               public head: HeaderService) {
-    console.log('constructor');
-    this.cardService.setSelectedIndex(1);
-    this.cardService.setTitle('Customer Management');
-    this.head.title = 'Customer Management';
+    this.head.setNextTitle('Customer Management');
   }
 
   ngOnInit(): void {
-    this.cardService.selectedTitle.next('Customer Management');
     this.getCustomers();
-    this.cardService.setSelectedIndex(1);
-    this.cardService.setOtherTitle('Customer Management');
-    if (window.screen.width < 500) {
-      this.mobile = true;
-    }
-    
   }
 
   ngOnChanges() {
     this.getCustomers();
-    this.cardService.setSelectedIndex(1);
-    this.cardService.setTitle('Customer Management');
   }
-  ngAfterViewChecked() {
-  
-    
-  }
+  // edit dialog
+  // calls dialogBoxComponent
   openDialog(action, obj) {
     obj.action = action;
     const dialogRef = this.dialog.open(DialogBoxComponent, {
-      width: '350px',
+      width: 'auto',
+      autoFocus: true,
+      height: 'auto',
+      hasBackdrop: true,
+      direction: 'ltr',
       data: obj,
+      
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -106,10 +96,10 @@ export class CustomersComponent implements OnInit, OnChanges, AfterViewChecked {
         console.log(error);
       });
   }
-
+  //delete confirm dialog
   confirmDialog(elem) {
     const message = 'Confirm Delete: ' + elem.name;
-    const dialogData = new ConfirmDialogModel('Confirm Action', message);
+    const dialogData = new ConfirmDialogModel('Confirm Delete of Customer.', message);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       maxWidth: '400px',
       data: dialogData,
@@ -125,38 +115,42 @@ export class CustomersComponent implements OnInit, OnChanges, AfterViewChecked {
     });
   }
 
+  // Create new Customer Dialog
   newCustomer() {
-
-    const message = 'Add New Customer';
+    
     const dialogData: Customer = new Customer();
     const dialogRef = this.dialog.open(NewCustomerComponent, {
+    
       data: dialogData,
       autoFocus: true,
       height: 'auto',
       width: 'auto',
-      direction: "ltr"
+      hasBackdrop: true,
+      direction: 'ltr',
+      panelClass: 'background'
+
     });
     dialogRef.afterClosed().subscribe(customerData => {
       if (customerData.event) {
         this.addCustomer(customerData.event);
-
       }
     });
-
-
   }
 
 
+  // Delete customer element from array, call service to remove
   onDelete(elem) {
-    this.dataSource = this.dataSource.filter(i => i.id !== elem.id);
+   // this.dataSource = this.dataSource.filter(i => i.id !== elem.id);
+    
     this.service.deleteCustomers(elem.id).subscribe();
+     
     this.ngOnInit();
   }
 
-  addCustomer(data) {
-    this.service.addCustomer(data).subscribe(
-      (data: Customer) => {
-        console.log(data);
+  addCustomer(customerdata) {
+    this.service.addCustomer(customerdata).subscribe(
+      (customerdata: Customer) => {
+        console.log(customerdata);
       }, (error: any) => {
         console.log(error);
       }

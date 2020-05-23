@@ -1,47 +1,24 @@
-<div class="container"
-      >
-<mat-grid-list 
-    fxFlex="1 0 calc(25%-1px)"
-    class="grid" 
-    cols="1.5" 
-    rowHeight="100px"  
-    [gutterSize]="'3px'">
-    <span  
-        *ngFor="let card of cardList; let i = index">
-        <mat-grid-tile 
-            fxLayout="center center"
-            class="cardList" 
-            fxFlex="1 0 calc(20% - 5px)" 
-            *ngIf="i !== 0" [title]="card.title" 
+<div class="container" fxLayout.xs="column" fxLayout=" wrap" fxlayoutGap="10px grid">
+    <ng-container *ngFor="let card of cardList; let i = index" fxLaoutGap="10px">
+        <mat-card fxFlexfill.fxFlex.lt-md fxFlexOffset="10px" fxFlex.xs="0 1 calc(50%-20px)"
+            fxFlex.sm="0 1 calc(50%-20px)" fxFlex.md="0 1 calc(33%-20px)" fxFlex.gt-md="0 1 calc(25%-20px)"
+            fxFlexOffset="20px" *ngIf="i !== 0" [style.backgroundColor]="card.color">
+            <mat-card-header>
+
+                <mat-card-title>{{card.title}}</mat-card-title>
+
+            </mat-card-header>
+                <mat-card-actions align="end">
+                <button mat-icon-button (click)="navigate(i)" [routerLink]='card.path'>
+                    <mat-icon>
+                        settings
+                    </mat-icon>
+                </button>
+            </mat-card-actions>
+
             
-            class="tile">
-            <mat-card 
-                
-                class="cardListItem"
-                [style.backgroundColor]="card.color"
-                fxFlex="0 1 calc(30% - 2px)">
-                
-                <mat-card-header>
-                    <mat-card-title>{{card.title}}</mat-card-title>
-                    <span class="card-content" fxLayout="end end">
-    
-                        
-                        <button 
-                        
-                            [disabled]="card.title === 'Finance Management' "
-                             mat-icon-button 
-                             (click)="navigate(i)"
-                            [routerLink]='card.path'>
-                            <mat-icon
-                                >settings
-                            </mat-icon>
-                        </button>
 
-                    </span>
-                </mat-card-header>
+        </mat-card>
+    </ng-container>
 
-            </mat-card>
-        </mat-grid-tile>
-    </span>
-</mat-grid-list>
-</div> 
+</div>

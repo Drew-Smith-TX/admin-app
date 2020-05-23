@@ -1,1 +1,60 @@
-<p>projects works!</p>
+<span fxLayout="row">
+    <button 
+        (click)="addProjectDialog()"
+        mat-flat-button 
+        color="primary"
+        >
+        Add Project
+    </button>
+</span>
+<hr>
+<h1  *ngIf="mobile" class="mat-h2">Projects</h1>
+<mat-table
+    [dataSource]="projects"
+    class="table">
+    <mat-header-row *matHeaderRowDef="tableColumns" ></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+
+    <ng-container matColumnDef="id">  
+        <mat-header-cell *matHeaderCellDef>
+            <span *ngIf="!mobile">Project ID</span>    
+        </mat-header-cell>
+        <mat-cell data-label="Project Id" *matCellDef="let project">{{project.id}}</mat-cell>
+    </ng-container>
+    
+
+    <ng-container matColumnDef="project_type">
+        <mat-header-cell *matHeaderCellDef>
+            <span *ngIf="!mobile">Project Type</span>
+            <mat-cell data-label="Project Type" *matCellDef="let project">{{project.project_type}}</mat-cell>
+        </mat-header-cell>
+
+    </ng-container>
+
+    <ng-container>
+        <mat-header-cell>
+            <span>
+                <mat-cell></mat-cell>
+            </span>
+        </mat-header-cell>
+    </ng-container>
+    <ng-container matColumnDef="action" mat-elevation-z8>
+        <mat-header-cell  *matHeaderCellDef >
+            <span *ngIf="!mobile">
+                Actions
+            </span>
+            </mat-header-cell>
+        <mat-cell data-label="actions" *matCellDef="let row" >
+            <!--Delete Button-->
+             <button mat-icon-button color="warn"(click)="confirmDialog(row)" >
+                 <mat-icon>delete</mat-icon>
+             </button>
+             <!--Edit Button-->
+             <button mat-icon-button color="primary"(click)="editProjectDialog('Update Project', row)">
+                 <mat-icon>edit</mat-icon>
+             </button>
+        </mat-cell>
+      </ng-container>
+
+
+</mat-table>

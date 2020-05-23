@@ -14,7 +14,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 import {  MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-
+import {MatDatepickerModule, MatDatepicker} from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 
 const MaterialComponents = [
 
@@ -33,7 +34,10 @@ const MaterialComponents = [
   MatSnackBarModule,
   MatSelectModule,
   MatInputModule,
-  MatFormFieldModule
+  MatFormFieldModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  
 ];
 
 @NgModule({

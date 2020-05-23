@@ -9,13 +9,18 @@ import { MaterialsModule } from './materials/materials.module';
 import { HomeComponent } from './home/home.component';
 import { ServerService } from './_service/server.service';
 import { HttpClientModule } from '@angular/common/http';
-import { DialogBoxComponent } from './dialog-box/dialog-box.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
 
-import { ConfirmationDialogComponent } from './dialog-box/confirmation-dialog/confirmation-dialog.component';
-import { NewCustomerComponent } from './dialog-box/new-customer/new-customer.component';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
+
+import { DialogBoxComponent } from './dialog-box/_customer_dialogs/edit-customer/dialog-box.component';
+import { NewCustomerComponent } from './dialog-box/_customer_dialogs/new-customer/new-customer.component';
+import { ConfirmationDialogComponent } from './dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
+import { AddProjectDialogComponent } from './dialog-box/addProjectDialog/addProjectDialog.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +28,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HomeComponent,
     DialogBoxComponent,
     ConfirmationDialogComponent,
-    NewCustomerComponent
+    NewCustomerComponent,
+    AddProjectDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -33,7 +39,8 @@ import {FlexLayoutModule} from '@angular/flex-layout';
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    NgxPaginationModule
   ],
   providers: [CardService,
     ServerService],

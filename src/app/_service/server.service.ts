@@ -9,6 +9,8 @@ import { User } from '../_models/user';
 import { environment } from '../../environments/environment';
 import { Service } from '../_models/service';
 import { rendererTypeName } from '@angular/compiler';
+import { Project } from '../_models/project';
+
 @Injectable({
   providedIn: 'root'
 })
@@ -18,16 +20,20 @@ export class ServerService {
   constructor(private http: HttpClient) {
     console.log(this.baseUrl);
   }
+
+  getProjects(): Observable<Project[]> {
+    return this.http.get<Project[]>(this.baseUrl + 'projects/');
+  }
+
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(this.baseUrl + 'users/');
   }
 
   deleteCustomers(id: number): Observable<{}> {
     const url = this.baseUrl + 'customer/' + id;
-    console.log(url);
-    return this.http.delete(url);
-
-
+    return this.http.delete(url)
+    .pipe(
+      catchError(this.handleError));
   }
   getCustomers(): Observable<Customer[]> {
     return this.http.get<Customer[]>(this.baseUrl + 'customer');
@@ -40,7 +46,13 @@ export class ServerService {
     const url = this.baseUrl + 'service/';
     return this.http.get<Service[]>(url);
   }
-
+  addProject(obj: any): Observable<any>{
+    const url = this.baseUrl + 'projects/';
+    return this.http.post<Project>(url,obj,{
+      headers: new HttpHeaders({'Content-Type':'applicatin/json'})
+    })
+    .pipe(catchError(this.handleError));
+  }
   addCustomer(obj: any): Observable<any> {
     const url = this.baseUrl + 'customer/';
     console.log(url);
@@ -48,6 +60,13 @@ export class ServerService {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })
     })
       .pipe(catchError(this.handleError));
+  }
+  deleteProject(id: number): Observable<Project>{
+    const url = this.baseUrl + 'projects/' + id;
+    return this.http.delete<Project>(url)
+      .pipe(
+        catchError(this.handleError)
+    );
   }
 
   handleError(error: HttpErrorResponse) {
