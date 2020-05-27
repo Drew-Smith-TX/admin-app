@@ -20,6 +20,8 @@ import { DialogBoxComponent } from './dialog-box/_customer_dialogs/edit-customer
 import { NewCustomerComponent } from './dialog-box/_customer_dialogs/new-customer/new-customer.component';
 import { ConfirmationDialogComponent } from './dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
 import { AddProjectDialogComponent } from './dialog-box/addProjectDialog/addProjectDialog.component';
+import { FourZeroFourComponent } from './four-zero-four/four-zero-four.component';
+import { HelpComponent } from './nav/help/help.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import { AddProjectDialogComponent } from './dialog-box/addProjectDialog/addProj
     DialogBoxComponent,
     ConfirmationDialogComponent,
     NewCustomerComponent,
-    AddProjectDialogComponent
+    AddProjectDialogComponent,
+    FourZeroFourComponent,
+    HelpComponent
   ],
   imports: [
     BrowserModule,

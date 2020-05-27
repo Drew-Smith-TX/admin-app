@@ -1,24 +1,29 @@
-import { Component, OnInit } from '@angular/core';
-import { HeaderService } from '../_service/header.service';
-import { Project } from '../_models/project';
-import { ServerService } from '../_service/server.service';
-import {MatTable} from '@angular/material/table';
-
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { HeaderService } from '../../_service/header.service';
+import { Project } from '../../_models/project';
+import { ServerService } from '../../_service/server.service';
+import {MatTable, MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
-import { ConfirmDialogModel } from '../_models/confirm-dialog-model';
+import { ConfirmDialogModel } from '../../_models/confirm-dialog-model';
 import { element } from 'protractor';
-import { ConfirmationDialogComponent } from '../dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
-import { AddProjectDialogComponent } from '../dialog-box/addProjectDialog/addProjectDialog.component';
+import { ConfirmationDialogComponent } from '../../dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
+import { AddProjectDialogComponent } from '../../dialog-box/addProjectDialog/addProjectDialog.component';
+import { MatSort } from '@angular/material/sort';
 @Component({
   selector: 'app-projects',
   templateUrl: './projects.component.html',
   styleUrls: ['./projects.component.scss']
 })
 export class ProjectsComponent implements OnInit {
+  @ViewChild(MatPaginator)paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+  @ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  dataSource;
   projects: Project[];
   mobile: boolean;
   result: boolean;
-  tableColumns = ['id', 'project_type', 'action'];
+  tableColumns = ['id', 'project_type','action'];
   constructor(private head: HeaderService, 
               private service: ServerService,
               public dialog: MatDialog) {
@@ -38,6 +43,9 @@ export class ProjectsComponent implements OnInit {
     this.service.getProjects()
       .subscribe((project: Project[]) => {
         this.projects = project;
+        this.dataSource = new MatTableDataSource<Project>(this.projects);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
         console.log(this.projects);
        }, error => {
         console.log(error);
@@ -45,6 +53,10 @@ export class ProjectsComponent implements OnInit {
     console.log(this.projects);
   }
 
+  applyFilter(filterValue){
+    filterValue = filterValue.trim().toLowerCase();
+    this.dataSource.filter = filterValue;
+  }
   confirmDialog(elem) {
     const message = 'Confirm delete' + elem.name;
     const dialogData = new ConfirmDialogModel('Confirm Project Delete',

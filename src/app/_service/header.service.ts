@@ -5,12 +5,10 @@ import { Subject } from 'rxjs';
   providedIn: 'root'
 })
 export class HeaderService {
- public titleSubject: Subject<string> = new Subject<string>();
-constructor() { 
-  
-}
-setNextTitle(title: string) {
-  this.titleSubject.next(title);
-}
+  public titleSubject: Subject<string> = new Subject<string>();
+  constructor() { }
+  setNextTitle(title: string) {
+    this.titleSubject.next(title);
+  }
 
 }

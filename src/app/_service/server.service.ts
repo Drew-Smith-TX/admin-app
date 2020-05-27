@@ -10,17 +10,37 @@ import { environment } from '../../environments/environment';
 import { Service } from '../_models/service';
 import { rendererTypeName } from '@angular/compiler';
 import { Project } from '../_models/project';
+import { request } from 'http';
+import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ServerService {
   baseUrl = environment.apiUrl;
-
-  constructor(private http: HttpClient) {
+  customerCount;
+  constructor(private http: HttpClient,
+              ) {
     console.log(this.baseUrl);
   }
-
+  getCustomerCount() {
+    const url = this.baseUrl + 'customers?_start=0&_limit=1000';
+    console.log('customer url')
+    console.log(url);
+    return this.http.get<any>(url);
+    
+  }
+  getTotalCount(heading: string) {
+    console.log(heading)
+    const url = this.baseUrl + heading + '?_start=0&_limit=1000';
+    console.log(url)
+    return this.http.get<any>(url);
+    // const url = this.baseUrl + 'project_start=0&_limit=1000';
+    // console.log('project url')
+    // console.log(url);
+    // return this.http.get<any>(this.baseUrl,)
+  }
   getProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(this.baseUrl + 'projects/');
   }
@@ -30,16 +50,16 @@ export class ServerService {
   }
 
   deleteCustomers(id: number): Observable<{}> {
-    const url = this.baseUrl + 'customer/' + id;
+    const url = this.baseUrl + 'customers/' + id;
     return this.http.delete(url)
     .pipe(
       catchError(this.handleError));
   }
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.baseUrl + 'customer');
+    return this.http.get<Customer[]>(this.baseUrl + 'customers');
   }
   updateCustomer(customer): Observable<Customer> {
-    const url = this.baseUrl + 'customer/' + customer.id;
+    const url = this.baseUrl + 'customers/' + customer.id;
     return this.http.put<Customer>(url, customer);
   }
   getServices(): Observable<Service[]> {
@@ -54,7 +74,7 @@ export class ServerService {
     .pipe(catchError(this.handleError));
   }
   addCustomer(obj: any): Observable<any> {
-    const url = this.baseUrl + 'customer/';
+    const url = this.baseUrl + 'customers/';
     console.log(url);
     return this.http.post<Customer>(url, obj, {
       headers: new HttpHeaders({ 'Content-Type': 'application/json' })

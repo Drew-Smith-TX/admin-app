@@ -2,10 +2,11 @@
   <span class="container">
     <form [formGroup]="customerForm">
       <mat-card-title fxLayout="center center">
-        Add New Customer
+        Add New Customer 
       </mat-card-title>
       <br>
       <mat-card-content f>
+       
         <!--Name Field-->
         <div>
           <mat-form-field>
@@ -27,6 +28,17 @@
             </span>
           </mat-form-field>
         </div>
+        <!--Website-->
+        <div>
+          <mat-form-field>
+            <mat-label>Website</mat-label>
+            <span>
+              <input required matInput type="text" formControlName="website" placeholder="Enter Website">
+              <mat-icon color="warn" *ngIf="websiteCtl.invalid && websiteCtl.touched">warning</mat-icon>
+            </span>
+          </mat-form-field>
+        </div>
+
         <!--Location Field-->
         <div>
           <mat-form-field>
@@ -91,8 +103,9 @@
           </mat-form-field>
         </div>
 
-        <button (click)="onConfirm()" [disabled]="customerForm.invalid" mat-raised-button
-          color="primaary">Submit</button>
+       
+        <button (click)="onConfirm()" [disabled]="!customerForm.valid" mat-raised-button
+          color="primary">Submit</button>
         <button (click)="onClose()" mat-raised-button color="accent">Cancel</button>
       </mat-card-content>
 

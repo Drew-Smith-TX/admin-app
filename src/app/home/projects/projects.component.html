@@ -1,0 +1,58 @@
+<mat-form-field >
+    <mat-label>Search Projects</mat-label>
+    <input class="filter" (keyup)="applyFilter($event.target.value)"  align="start" matInput  placeholder="filter">   
+  </mat-form-field>
+  <br>
+<span >
+    <button mat-flat-button color="primary" (click)="addProjectDialog()">
+        Add Project
+    </button>
+</span>
+
+
+  <hr>
+<ng-container matColumnDef="id">
+
+<mat-table
+    #table
+    matSort
+    [dataSource]="dataSource">
+    <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
+   
+    
+    <ng-container matColumnDef="id">
+        <mat-header-cell class="id-cell" *matHeaderCellDef>
+            ID
+        </mat-header-cell>
+        <mat-cell *matCellDef="let project">{{project.id}}</mat-cell>
+    </ng-container>Add 
+
+   
+    <ng-container matColumnDef="project_type">
+        <mat-header-cell class="type-cell" *matHeaderCellDef>
+            Project Type
+        </mat-header-cell>
+        <mat-cell *matCellDef="let project">{{project.project_type}}</mat-cell>
+    </ng-container>
+
+    <!-- Actions Header-->
+    <ng-container matColumnDef="action">
+        <mat-header-cell type="action-cell" *matHeaderCellDef>
+            Actions
+        </mat-header-cell>
+        <mat-cell *matCellDef="let row">
+            <button mat-icon-button color="warn" 
+                (click)="confirmDialog(row)">
+                <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button color="primary">
+                <mat-icon>edit</mat-icon>
+            </button>
+        </mat-cell>
+        
+    </ng-container>
+    
+
+</mat-table>
+<mat-paginator align="end" class="page" #paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>

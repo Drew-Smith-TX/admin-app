@@ -1,23 +1,42 @@
-div.container {
-    align-items: center;
-    justify-content: center;
-    margin: 2%;
-    padding-top: 10px;
-  >ng-container {
-    >mat-card {
-        margin: 4%;
-        padding-top: 10px;
-      >mat-card-header {
-        >mat-card-title {
-        }
-      }
-      button {
-         
-          mat-icon {
-          
-          
-        }
-      }
+ $container-padding: 10px;
+ $container-margin: 2%;
+ $mat-card-margin: 2%;
+ div.container {
+    
+     
+    //  justify-content: center;
+     margin: $container-margin;
+     padding: $container-padding;
+
+}
+mat-card{
+  cursor: pointer;
+  margin-top: $mat-card-margin;
+
+
+}
+
+ mat-card-header {
+   color:white;
+  mat-card-title.left {
+    display: inline ;
+      
     }
-  }
+ }
+mat-card-subtitle.total-left {
+   display: inline;
+   position: relative;
+   margin-left: 6%;
+   color: white;
+  
+ }
+ mat-card-subtitle.total-right {
+   display: inline;
+   margin-right: 6%;
+   float: right;
+   color: white;
+   font-size: 2em;
+ } // /*  */
+mat-card.disabled{
+  cursor: not-allowed;
 }

@@ -1,0 +1,117 @@
+
+$display: flex;
+$flex-direction: row;
+$justify-content: space-between;
+$margin-left-right: 1%;
+$align-items: flex-start;
+$paginator-justify: center;
+// Add Customer button
+$margin-top: 0.75%;
+span.add-button {
+  display: $display;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  margin-left: $margin-left-right;
+  margin-right: $margin-left-right;
+  align-items: $align-items;
+  
+   button {
+    margin-top: $margin-top;
+  }
+  //  Search field
+   mat-form-field.options {
+    margin-top: $margin-top;
+    > mat-label {
+      margin-top: $margin-top;
+    }
+    > input.filter {
+      margin-top: $margin-top;
+    }
+  }}
+
+
+mat-paginator.page {
+  display: $display;
+  flex-direction: $flex-direction;
+  justify-content: $paginator-justify;
+  
+}
+/////////////////////////
+
+ng-container{
+  mat-header-cell {
+    @media only screen and (min-width: 800px) {
+      border: 10px solid;
+      clip: rect(0 0 0 0);
+      margin: 1px;
+      padding: 0;
+      position: absolute;
+      width: 0px;
+      height: 0px;
+    }
+  }
+  mat-cell {
+    @media only screen and (min-width: 800px){
+    border-bottom: 1px solid #ddd;
+    display: block;
+    font-size: 1em;
+    text-align: right;
+    font-weight: bold;
+    height: 30px;
+    margin-bottom: 4%;
+    }
+}
+}
+
+@media screen and (max-width: 900px) {
+  .mat-table {
+    border: 0;
+    vertical-align: middle;
+
+    .mat-header-cell {
+      border: 10px solid;
+      clip: rect(0 0 0 0);
+      margin: 1px;
+      padding: 0;
+      position: absolute;
+      width: 0px;
+      height: 0px;
+    }
+
+    .mat-row {
+      border-bottom: 5px solid #ddd;
+      border-top: 5px solid #ddd;
+      display: block;
+      background-color: whitesmoke;
+    }
+
+    .mat-cell {
+      border-bottom: 1px solid #ddd;
+      display: block;
+      font-size: 1em;
+      text-align: right;
+      font-weight: bold;
+      // height: 30px;
+      margin-bottom: 4%;
+    }
+  }
+
+  .mat-table .mat-cell {
+    &:before {
+      content: attr(data-label);
+      float: left;
+      text-transform: uppercase;
+      font-weight: normal;
+      font-size: 0.85em;
+      margin-left: 1%;
+    }
+
+    &:last-child {
+      border-bottom: 0;
+    }
+
+    &:first-child {
+      margin-top: 4%;
+    }
+  }
+} /// end media query

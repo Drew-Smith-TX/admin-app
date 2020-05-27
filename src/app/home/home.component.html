@@ -1,24 +1,43 @@
-<div class="container" fxLayout.xs="column" fxLayout=" wrap" fxlayoutGap="10px grid">
-    <ng-container *ngFor="let card of cardList; let i = index" fxLaoutGap="10px">
-        <mat-card fxFlexfill.fxFlex.lt-md fxFlexOffset="10px" fxFlex.xs="0 1 calc(50%-20px)"
-            fxFlex.sm="0 1 calc(50%-20px)" fxFlex.md="0 1 calc(33%-20px)" fxFlex.gt-md="0 1 calc(25%-20px)"
+<div class="container" fxLayout.xs="column" fxLayout=" wrap" fxlayoutGap="20px grid">
+    <ng-container *ngFor="let card of cardList; let i = index" fxLaoutGap="20px grid">
+      
+        <mat-card 
+            (click)="navigate(card.path)"
+            routerLinkActive="card.title !== 'Finance Management'"
+
+            [ngClass]="{'disabled': card.title == 'Finance Management'}"
+            [routerLink]="card.title === 'Finance Management' ? null: card.path"
+            fxFlexfill.fxFlex.lt-md fxFlexOffset="20px grid" fxFlex.xs="0 1 calc(50%-20px)"
+            fxFlex.sm="0 1 calc(50%-20px)" fxFlex.md="0 1 calc(33%-20px)" fxFlex.gt-md="0 1 calc(33%-20px)"
             fxFlexOffset="20px" *ngIf="i !== 0" [style.backgroundColor]="card.color">
+       
             <mat-card-header>
-
-                <mat-card-title>{{card.title}}</mat-card-title>
-
+                
+                <mat-card-title class="left">
+                    {{card.title}}
+                </mat-card-title>
+                <!-- <mat-card-title class="right" align="end">
+                    <button [disabled]="card.title === 'Finance Management'" mat-icon-button (click)="navigate(i)" [routerLink]='card.path' align="end">
+                        <mat-icon [ngStyle]="{'color':'black'}">
+                            settings
+                        </mat-icon>
+                    </button>
+                </mat-card-title> -->
+               
             </mat-card-header>
-                <mat-card-actions align="end">
-                <button mat-icon-button (click)="navigate(i)" [routerLink]='card.path'>
-                    <mat-icon>
-                        settings
-                    </mat-icon>
-                </button>
-            </mat-card-actions>
-
             
-
-        </mat-card>
+            <br>
+            <!--Display total table numbers-->
+            <mat-card-content>
+                <mat-card-subtitle class="total-left">
+                    Total {{card.path | titlecase}}:
+                </mat-card-subtitle>
+                <mat-card-subtitle class="total-right">
+                    {{card.total}}
+                </mat-card-subtitle>
+            </mat-card-content>
+        </mat-card> 
+    
     </ng-container>
 
 </div>
