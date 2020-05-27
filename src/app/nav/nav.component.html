@@ -1,40 +1,29 @@
 <mat-toolbar 
     color="primary" 
     class="navbar">
-    <mat-toolbar-row
-        fxLayoutAlign="end end"
-        >
-        <button mat-icon-button
-            routerLink="/home" routerLinkActive="active" >
-            <mat-icon>
-                home
-            </mat-icon>
-        </button>
-    </mat-toolbar-row>
-    <mat-toolbar-row>
-        <div></div>
-        <div>
-            <button mat-icon-button onclick="this.blur()">
+    <mat-toolbar-row class="first-row">
+        <span class="app-title" 
+            routerLink="/home">Admin Management
+        </span> 
+        
+        <span class="spacer"></span>
+        <span class="help-span">
+            <button mat-icon-button onclick="this.blur()"
+                routerLink="/help">
                 <mat-icon class="help-button">help</mat-icon>
                 <br>
                 help
-                
             </button>
-        </div>
+        </span>
     </mat-toolbar-row>
-    
+  
+    <mat-toolbar-row class="title-row"
+        fxHide.lt-sm="true">
+        <span class="subheading">
+            {{monitorTitle}}
+        </span> 
 
-    
-<mat-toolbar-row >
-    <span class="subheading">
-        <div #navTitle
-            class="mat-subheading-2">
-             
-             {{monitorTitle}}
-         </div>
-    </span> 
-
-</mat-toolbar-row>
+    </mat-toolbar-row>
 
 
 </mat-toolbar>

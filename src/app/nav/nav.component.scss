@@ -16,32 +16,44 @@ $colors: (
     flex: 1 1 auto;
     justify-self: center;
     border-radius: 6px;
-    //badge and help icon
-    mat-toolbar-row{
-        justify-content: space-between;
-        div{
-            // button{
-            //     outline: !important
-
-            // }
-        }
-     
+}
+span.app-title {
+  cursor: pointer;
+}
+span.spacer {
+    flex: 1 1 auto;
+    text-align: center;
+}
+mat-toolbar.navbar {
+    background-color:$nav-bg-color ;
+    flex: 1 1 auto;
+    justify-self: center;
+    border-radius: 6px;
+  mat-toolbar-row.first-row {
+    span.app-title {
+        margin: auto;
     }
-    //Welcome paragraph heading
-    mat-toolbar-row{
-        span{
-            margin:auto;
-        }
+    span.spacer {
+        flex: 1 1 auto;
+    text-align: center;
     }
-    //welcome p body
-    mat-toolbar-row{
-        .body{
-            
-            p{
-            text-overflow: ellipsis;
-            }
+    span.help-span {
+      button {
+        mat-icon.help-button {
         }
+        br {
+        }
+      }
     }
-    
-
+  }
+  mat-toolbar-row.title-row {
+    span.subheading {
+        margin:auto;
+      div.mat-subheading-3 {
+        flex-shrink: 2;
+          text-overflow: ellipsis;
+         
+      }
+    }
+  }
 }
