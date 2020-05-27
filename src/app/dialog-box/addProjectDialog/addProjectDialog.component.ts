@@ -12,10 +12,11 @@ export class AddProjectDialogComponent implements OnInit {
   localData: any;
   action: string;
 
-  
-  projectTypeCtl: FormControl;
   projectGroup: FormGroup;
+  projectTypeCtl: FormControl;
   
+  companyIdCtl: FormControl;
+  descriptionCtl: FormControl;
   constructor(public dialogRef: MatDialogRef<AddProjectDialogComponent>,
               @Optional() @Inject(MAT_DIALOG_DATA) public data: Project,
               @Optional() @Inject(MAT_DIALOG_DATA) public actionTake: string) {
@@ -23,13 +24,20 @@ export class AddProjectDialogComponent implements OnInit {
                 this.localData = {...data};
                 console.log(this.localData)
                 this.action = actionTake;
+                this.instantiateLocalForm();
                 
                 
   }
-  instantiateLocal() {
+  instantiateLocalForm() {
     this.projectTypeCtl = new FormControl('', Validators.required);
+    this.companyIdCtl = new FormControl('', Validators.required);
+    this.descriptionCtl = new FormControl('', Validators.required)
+
     this.projectGroup = new FormGroup({
-      projecType: this.projectTypeCtl
+      companyId: this.companyIdCtl,
+      projectType: this.projectTypeCtl,
+      
+      description: this.descriptionCtl
     });
   }
   closeDialog() {
@@ -37,7 +45,10 @@ export class AddProjectDialogComponent implements OnInit {
   }
 
   doAction() {
+    console.log('in do action')
     const project = new Project(this.projectGroup.value);
+    console.log(project)
+    console.log('in do action')
     this.dialogRef.close({event: project});
   }
   ngOnInit() {

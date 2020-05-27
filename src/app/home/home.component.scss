@@ -38,5 +38,7 @@ mat-card-subtitle.total-left {
    font-size: 2em;
  } // /*  */
 mat-card.disabled{
+  opacity: .3;
   cursor: not-allowed;
+ 
 }

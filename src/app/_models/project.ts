@@ -1,6 +1,6 @@
 export class Project {
     id?: number;
-    companyId: number
+    companyId: number;
     projectType: string;
     description: string;
     constructor(init?: Partial<Project>){

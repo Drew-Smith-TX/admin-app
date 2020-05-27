@@ -1,23 +1,21 @@
 <div>
     <span fxLayout="row" class="add-button" fl>
         <button (click)="newCustomer()" mat-flat-button color="primary">
-
             Add Customer
         </button>
 
         <mat-form-field class="options" appearance="outline" color="primary">
             <mat-label>Search Customers</mat-label>
-            <input color="primary" class="filter" align="start" matInput (keyup)="applyFilter($event.target.value)" placeholder="filter">
-
+            <input color="primary" class="filter" align="start" matInput 
+                    (keyup)="applyFilter($event.target.value)" 
+                    placeholder="filter">
         </mat-form-field>
     </span>
+
     <hr>
 
-
-
-
-
-    <mat-table #table matSort class="mat-elevation-z8" [dataSource]="dataSource" class="table">
+    <mat-table #table matSort class="mat-elevation-z8" [dataSource]="dataSource"
+               class="table">
 
         <!--Delete/Edit buttons-->
         <ng-container matColumnDef="actions" mat-elevation-z8>
@@ -28,12 +26,14 @@
             </mat-header-cell>
             <mat-cell data-label="actions" *matCellDef="let row">
                 <!--Delete Button-->
-                <button class="delete-button" mat-icon-button color="warn" (click)="confirmDialog(row)">
+                <button class="delete-button" mat-icon-button color="warn" 
+                        (click)="confirmDialog(row)">
                     <mat-icon>delete</mat-icon>
 
                 </button>
                 <!--Edit Button-->
-                <button class="edit-button" mat-icon-button color="primary" (click)="openDialog('Update',row)">
+                <button class="edit-button" mat-icon-button color="primary" 
+                        (click)="openDialog('Update',row)">
                     <mat-icon>edit</mat-icon>
 
                 </button>
@@ -46,7 +46,9 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">ID</span>
             </mat-header-cell>
-            <mat-cell data-label="company id" *matCellDef="let customer">{{customer.id}}</mat-cell>
+            <mat-cell data-label="company id" *matCellDef="let customer">
+                {{customer.id}}
+            </mat-cell>
         </ng-container>
 
         <!--Company Name  Column-->
@@ -54,7 +56,9 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">Name</span>
             </mat-header-cell>
-            <mat-cell data-label="company name" *matCellDef="let customer">{{customer.name}}</mat-cell>
+            <mat-cell data-label="company name" *matCellDef="let customer">
+                {{customer.name}}
+            </mat-cell>
         </ng-container>
 
         <!--Company Email  Column-->
@@ -63,7 +67,9 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">Contact</span>
             </mat-header-cell>
-            <mat-cell data-label="company email" *matCellDef="let customer">{{customer.email}}</mat-cell>
+            <mat-cell data-label="company email" *matCellDef="let customer">
+                {{customer.email}}
+            </mat-cell>
         </ng-container>
 
         <!--  Location Column-->
@@ -71,7 +77,9 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">Location</span>
             </mat-header-cell>
-            <mat-cell data-label="location" *matCellDef="let customer">{{customer.location}}</mat-cell>
+            <mat-cell data-label="location" *matCellDef="let customer">
+                {{customer.location}}
+            </mat-cell>
         </ng-container>
 
         <!--Service column-->
@@ -79,7 +87,9 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">Services</span>
             </mat-header-cell>
-            <mat-cell data-label="services" *matCellDef="let customer">{{customer.service}}</mat-cell>
+            <mat-cell data-label="services" *matCellDef="let customer">
+                {{customer.service}}
+            </mat-cell>
         </ng-container>
 
         <!--Contact Person Column-->
@@ -87,7 +97,9 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">Contact Person</span>
             </mat-header-cell>
-            <mat-cell data-label="contact person" *matCellDef="let customer">{{customer.contactPerson}}</mat-cell>
+            <mat-cell data-label="contact person" *matCellDef="let customer">
+                {{customer.contactPerson}}
+            </mat-cell>
         </ng-container>
 
         <!-- Website Column-->
@@ -96,7 +108,9 @@
                 <span *ngIf="!mobile">Website</span>
             </mat-header-cell>
             <mat-cell data-label="website" *matCellDef="let customer">
-                <a (click)="goToUrl(customer.website)" href="">{{customer.website}}</a>
+                <a (click)="goToUrl(customer.website)" href="">
+                    {{customer.website}}
+                </a>
             </mat-cell>
         </ng-container>
 
@@ -104,11 +118,14 @@
             <mat-header-cell *matHeaderCellDef>
                 <span *ngIf="!mobile">Description</span>
             </mat-header-cell>
-            <mat-cell data-label="description" *matCellDef="let customer">{{customer.description}}</mat-cell>
+            <mat-cell data-label="description" *matCellDef="let customer">
+                {{customer.description}}
+            </mat-cell>
         </ng-container>
 
         <mat-header-row *matHeaderRowDef="tableColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: tableColumns"></mat-row>
     </mat-table>
 
-    <mat-paginator class="page" #paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+    <mat-paginator class="page" #paginator [pageSizeOptions]="[5, 10, 25]">
+    </mat-paginator>

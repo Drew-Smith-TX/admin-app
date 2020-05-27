@@ -155,7 +155,8 @@ export class CustomersComponent implements OnInit, OnChanges {
         this.toast.openToast('Delete cancelled', 'Close')
       }
     });
-    this.ngOnInit();
+    //this.ngOnInit();
+    this.table.renderRows();
   }
   goToUrl(website: string){
     const location =  'http://' + website;
@@ -181,6 +182,8 @@ export class CustomersComponent implements OnInit, OnChanges {
     dialogRef.afterClosed().subscribe(customerData => {
       if (customerData.event) {
         this.addCustomer(customerData.event);
+      }else{
+        this.toast.openToast('Action Cancelled', 'Close')
       }
     });
   }
@@ -198,6 +201,7 @@ export class CustomersComponent implements OnInit, OnChanges {
     this.service.addCustomer(customerdata).subscribe(
       (customerdata: Customer) => {
         console.log(customerdata);
+        this.toast.openToast('Customer Successfully Added', 'Close')
       }, (error: any) => {
         console.log(error);
       }

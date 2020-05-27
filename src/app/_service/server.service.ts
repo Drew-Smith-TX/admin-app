@@ -8,10 +8,10 @@ import { Customer } from '../_models/customer';
 import { User } from '../_models/user';
 import { environment } from '../../environments/environment';
 import { Service } from '../_models/service';
-import { rendererTypeName } from '@angular/compiler';
+
 import { Project } from '../_models/project';
-import { request } from 'http';
-import { MatGridTileHeaderCssMatStyler } from '@angular/material/grid-list';
+
+
 
 
 @Injectable({
@@ -36,17 +36,15 @@ export class ServerService {
     const url = this.baseUrl + heading + '?_start=0&_limit=1000';
     console.log(url)
     return this.http.get<any>(url);
-    // const url = this.baseUrl + 'project_start=0&_limit=1000';
-    // console.log('project url')
-    // console.log(url);
-    // return this.http.get<any>(this.baseUrl,)
+ 
   }
   getProjects(): Observable<Project[]> {
     return this.http.get<Project[]>(this.baseUrl + 'projects/');
   }
 
   getUsers(): Observable<User[]> {
-    return this.http.get<User[]>(this.baseUrl + 'users/');
+    return this.http.get<User[]>(this.baseUrl + 'users/')
+      .pipe(catchError(this.handleError));
   }
 
   deleteCustomers(id: number): Observable<{}> {
@@ -56,7 +54,10 @@ export class ServerService {
       catchError(this.handleError));
   }
   getCustomers(): Observable<Customer[]> {
-    return this.http.get<Customer[]>(this.baseUrl + 'customers');
+    return this.http.get<Customer[]>(this.baseUrl + 'customers')
+      .pipe(
+        catchError(this.handleError)
+      );
   }
   updateCustomer(customer): Observable<Customer> {
     const url = this.baseUrl + 'customers/' + customer.id;
@@ -64,12 +65,18 @@ export class ServerService {
   }
   getServices(): Observable<Service[]> {
     const url = this.baseUrl + 'service/';
-    return this.http.get<Service[]>(url);
+    return this.http.get<Service[]>(url)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
   addProject(obj: any): Observable<any>{
     const url = this.baseUrl + 'projects/';
+    console.log(url)
+    console.log('in service')
+    console.log(obj)
     return this.http.post<Project>(url,obj,{
-      headers: new HttpHeaders({'Content-Type':'applicatin/json'})
+      headers: new HttpHeaders({'Content-Type':'application/json'})
     })
     .pipe(catchError(this.handleError));
   }

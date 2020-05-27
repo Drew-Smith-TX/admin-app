@@ -6,7 +6,7 @@ import {MatTable, MatTableDataSource} from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import {MatDialog} from '@angular/material/dialog';
 import { ConfirmDialogModel } from '../../_models/confirm-dialog-model';
-import { element } from 'protractor';
+
 import { ConfirmationDialogComponent } from '../../dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
 import { AddProjectDialogComponent } from '../../dialog-box/addProjectDialog/addProjectDialog.component';
 import { MatSort } from '@angular/material/sort';
@@ -23,7 +23,7 @@ export class ProjectsComponent implements OnInit {
   projects: Project[];
   mobile: boolean;
   result: boolean;
-  tableColumns = ['id', 'project_type','action'];
+  tableColumns = ['id', 'project_type','companyId','description','action'];
   constructor(private head: HeaderService, 
               private service: ServerService,
               public dialog: MatDialog) {
@@ -92,7 +92,10 @@ export class ProjectsComponent implements OnInit {
     });
     dialogRef.afterClosed().subscribe(pro => {
       if (pro.event){
-        this.addProject(pro.project)
+        console.log(pro.event)
+        if(pro.event.project){
+          this.addProject(pro.event);
+        }
       }
     })
   }

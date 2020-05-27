@@ -1,14 +1,47 @@
 <mat-card>
     <span class="container">
-        <form [formGroup]="projectGroup">
+        <form  [formGroup]="projectGroup">
             <mat-card-title>
                 Add New Project
             </mat-card-title>
+            <mat-card-content>
+                <div>
+                  <mat-form-field>
+                    <br>
+                    <mat-label>Company Id</mat-label>
+                    <span>
+                      <input required matInput type="number" formControlName="companyId" placeholder="Company Id">
+                      <mat-icon color="warn" *ngIf="companyIdCtl.invalid && companyIdCtl.touched">warning</mat-icon>
+                    </span>
+                  </mat-form-field>
+                  <br>
+                    <mat-form-field>
+                      <br>
+                      <mat-label>Project Type</mat-label>
+                      <span>
+                        <input required matInput type="text" formControlName="projectType" placeholder="Project Type">
+                        <mat-icon color="warn" *ngIf="projectTypeCtl.invalid && projectTypeCtl.touched">warning</mat-icon>
+                      </span>
+                    </mat-form-field>
+                    
+                    <br>
+                      <mat-form-field>
+                        <br>
+                        <mat-label>Description</mat-label>
+                        <span>
+                          <input required matInput type="text" formControlName="description" placeholder="Description">
+                          <mat-icon color="warn" *ngIf="descriptionCtl.invalid && descriptionCtl.touched">warning</mat-icon>
+                        </span>
+                      </mat-form-field>
+                      <br>
+                  </div>
+                  <button color="primary" (click)="doAction()" [disabled]="!projectGroup.valid" mat-raised-button
+                  color="primary">Submit</button>
+                <button (click)="closeDialog()" mat-raised-button color="accent">Cancel</button>
+            </mat-card-content>
         </form>
         <br>
-        <mat-card-content>
-            
-        </mat-card-content>
+        
     </span>
 
 </mat-card>

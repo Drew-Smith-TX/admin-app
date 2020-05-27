@@ -29,11 +29,23 @@
     </ng-container>Add 
 
    
+    <ng-container matColumnDef="companyId">
+        <mat-header-cell class="type-cell" *matHeaderCellDef>
+            Company Id
+        </mat-header-cell>
+        <mat-cell *matCellDef="let project">{{project.companyId}}</mat-cell>
+    </ng-container>
     <ng-container matColumnDef="project_type">
         <mat-header-cell class="type-cell" *matHeaderCellDef>
             Project Type
         </mat-header-cell>
-        <mat-cell *matCellDef="let project">{{project.project_type}}</mat-cell>
+        <mat-cell *matCellDef="let project">{{project.projectType}}</mat-cell>
+    </ng-container>
+    <ng-container matColumnDef="description">
+        <mat-header-cell class="type-cell" *matHeaderCellDef>
+            Project Type
+        </mat-header-cell>
+        <mat-cell *matCellDef="let project">{{project.description}}</mat-cell>
     </ng-container>
 
     <!-- Actions Header-->

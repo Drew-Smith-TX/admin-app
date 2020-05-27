@@ -38,7 +38,7 @@ export class NewCustomerComponent implements OnInit {
     this.serviceCtl = new FormControl('', Validators.nullValidator);
     this.dateCtl = new FormControl('', Validators.required);
     this.contactPersonCtl = new FormControl('', Validators.required);
-    this.contactEmailCtl = new FormControl('', Validators.required);
+    this.contactEmailCtl = new FormControl('', [Validators.required, Validators.email]);
     this.websiteCtl = new FormControl('', Validators.required);
     this.descriptionCtl = new FormControl('', Validators.required);
     // Create form group containing controls
@@ -71,6 +71,8 @@ export class NewCustomerComponent implements OnInit {
     console.log(this.customerForm)
   }
   onConfirm() {
+    
+    console.log(this.services)
     this.localData.customer = new Customer(this.customerForm.value)
     this.dialogRef.close({ event: this.localData.customer});
   }

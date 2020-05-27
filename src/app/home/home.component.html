@@ -4,7 +4,6 @@
         <mat-card 
             (click)="navigate(card.path)"
             routerLinkActive="card.title !== 'Finance Management'"
-
             [ngClass]="{'disabled': card.title == 'Finance Management'}"
             [routerLink]="card.title === 'Finance Management' ? null: card.path"
             fxFlexfill.fxFlex.lt-md fxFlexOffset="20px grid" fxFlex.xs="0 1 calc(50%-20px)"

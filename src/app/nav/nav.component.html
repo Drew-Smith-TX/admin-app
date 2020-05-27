@@ -2,7 +2,9 @@
     color="primary" 
     class="navbar">
     <mat-toolbar-row class="first-row">
-        <span class="app-title" 
+        <span
+        fxHide.lt-sm="true" 
+            class="app-title" 
             routerLink="/home">Admin Management
         </span> 
         
@@ -18,7 +20,7 @@
     </mat-toolbar-row>
   
     <mat-toolbar-row class="title-row"
-        fxHide.lt-sm="true">
+        >
         <span class="subheading">
             {{monitorTitle}}
         </span> 
