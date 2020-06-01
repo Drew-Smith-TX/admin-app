@@ -13,9 +13,9 @@ import { NewCustomerComponent } from '../../dialog-box/_customer_dialogs/new-cus
 import { ServerService } from '../../_service/server.service';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import {MatSnackBar} from '@angular/material/snack-bar';
+
 import {  ToastService } from 'src/app/_service/toast.service';
-import { RouterLink, Router } from '@angular/router';
+import {  Router } from '@angular/router';
 
 @Component({
   selector: 'app-customers',
@@ -138,7 +138,8 @@ export class CustomersComponent implements OnInit, OnChanges {
   //delete confirm dialog
   confirmDialog(elem) {
     const message = 'Confirm Delete: ' + elem.name;
-    const dialogData = new ConfirmDialogModel('Confirm Delete of Customer.', message);
+    const dialogData = new ConfirmDialogModel('Confirm Delete of Customer.'
+                                              , message);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       maxWidth: '400px',
       data: dialogData,
@@ -149,10 +150,10 @@ export class CustomersComponent implements OnInit, OnChanges {
       if (this.result === true) {
         this.onDelete(elem);
         console.log(elem);
-        this.toast.openToast('Deleted customer: ' + elem.name, 'close')
+        this.toast.openToast('Deleted customer: ' + elem.name, 'close');
       }
       else{
-        this.toast.openToast('Delete cancelled', 'Close')
+        this.toast.openToast('Delete cancelled', 'Close');
       }
     });
     //this.ngOnInit();
