@@ -8,7 +8,6 @@ import {CardService} from '../../_service/card.service';
 import {ToastService } from '../../_service/toast.service'
 import { ServerService } from '../../_service/server.service';
 import { RedirectComponent } from './redirect/redirect.component';
-
 @NgModule({
   declarations: [CustomersComponent, RedirectComponent,
                  ],
@@ -17,6 +16,7 @@ import { RedirectComponent } from './redirect/redirect.component';
     CustomersRoutingModule,
     MaterialsModule,
     HttpClientModule,
+    
    
   ],
   providers: [CardService,

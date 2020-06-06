@@ -10,6 +10,7 @@ import { environment } from '../../environments/environment';
 import { Service } from '../_models/service';
 
 import { Project } from '../_models/project';
+import { mixinDisableRipple } from '@angular/material/core';
 
 
 
@@ -47,6 +48,19 @@ export class ServerService {
       .pipe(catchError(this.handleError));
   }
 
+  deleteUser(id):Observable<{}>{
+    const url = this.baseUrl + 'users/' + id;
+    return this.http.delete<User>(url).pipe(
+      catchError(this.handleError)
+    )
+  }
+  getPaginatedUser(begin, end): Observable<User[]> {
+    const url = this.baseUrl + 'users?id_gte=' +begin +'&id_lte=' + end;
+    return this.http.get<User[]>(url)
+      .pipe(
+        catchError(this.handleError)
+      )
+  }
   deleteCustomers(id: number): Observable<{}> {
     const url = this.baseUrl + 'customers/' + id;
     return this.http.delete(url)

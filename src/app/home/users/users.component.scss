@@ -1,0 +1,30 @@
+
+$display: flex;
+$flex-direction: row;
+$justify-content: space-between;
+$margin-left-right: 1%;
+$align-items: flex-start;
+$paginator-justify: center;
+// Add Customer button
+$margin-top: 0.75%;
+span.add-button {
+  display: $display;
+  flex-direction: $flex-direction;
+  justify-content: $justify-content;
+  margin-left: $margin-left-right;
+  margin-right: $margin-left-right;
+  align-items: $align-items;
+  
+   button {
+    margin-top: $margin-top;
+  }
+  //  Search field
+   mat-form-field.options {
+    margin-top: $margin-top;
+    > mat-label {
+      margin-top: $margin-top;
+    }
+    > input.filter {
+      margin-top: $margin-top;
+    }
+  }}

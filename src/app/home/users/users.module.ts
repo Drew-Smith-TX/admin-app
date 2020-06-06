@@ -3,13 +3,14 @@ import { CommonModule } from '@angular/common';
 
 import { UsersRoutingModule } from './users-routing.module';
 import { UsersComponent } from './users.component';
-
-
+import {ScrollContainerComponent} from './scroll-container/scroll-container/scroll-container.component'
+import {MaterialsModule} from '../../materials/materials.module';
 @NgModule({
-  declarations: [UsersComponent],
+  declarations: [UsersComponent, ScrollContainerComponent],
   imports: [
     CommonModule,
-    UsersRoutingModule
+    UsersRoutingModule,
+    MaterialsModule
   ]
 })
 export class UsersModule { }

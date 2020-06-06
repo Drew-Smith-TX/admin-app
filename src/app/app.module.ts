@@ -11,9 +11,7 @@ import { ServerService } from './_service/server.service';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
-import {NgxsModule} from '@ngxs/store';
-import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
-import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+
 import { ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -34,13 +32,12 @@ import { HelpComponent } from './nav/help/help.component';
     NewCustomerComponent,
     AddProjectDialogComponent,
     FourZeroFourComponent,
-    HelpComponent
+    HelpComponent,
   ],
   imports: [
     BrowserModule,
-    NgxsModule.forRoot(),
-    NgxsReduxDevtoolsPluginModule.forRoot(),
-    NgxsLoggerPluginModule.forRoot(),
+    
+    
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialsModule,
@@ -48,7 +45,8 @@ import { HelpComponent } from './nav/help/help.component';
     ReactiveFormsModule,
     FormsModule,
     FlexLayoutModule,
-    NgxPaginationModule
+    NgxPaginationModule,
+    
   ],
   providers: [CardService,
     ServerService],
