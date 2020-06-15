@@ -1,51 +1,48 @@
 <span fxLayout="row" class="add-button" fl>
-    <button (click)="newUser()" mat-flat-button color="primary">
+    <button (click)="editAddUser('Add New User', false, null)" mat-flat-button 
+            color="primary">
         Add User
     </button>
     <mat-form-field class="options" appearance="outline" color="primary">
         <mat-label>Search User</mat-label>
-        <input color="primary" class="filter" align="start" matInput 
-                (keyup)="applyFilter($event.target.value)" 
-                placeholder="filter">
+        <input #searchBar color="primary" class="filter" align="start" matInput 
+               (keyup.enter)="applyFilter(searchBar.value)" placeholder="Search" [(ngModel)]="filterString">
+        <mat-icon-button matSuffix (click)="applyFilter(searchBar.value)">
+            <mat-icon color="primary">search</mat-icon>
+        </mat-icon-button>
+        <mat-icon-button *ngIf="filterString" matPrefix 
+                         (click)="onClear(searchBar.value)">
+            <mat-icon color="warn">clear_all</mat-icon>
+        </mat-icon-button>
     </mat-form-field>
 </span>
-<app-scroll-container
-                    [more]="hasMore()"
-                    [scrollOffset]="2500"
-                    [scrollDelay]="3000"
-                    (scrolled)="handleScroll($event)"
-                    [class.full]="full"
-                    [class.part]="!full">  
-    <mat-table [dataSource]="dataSource" matSort>
-        <ng-container 
-            *ngFor="let column of displayColumns"
-            [matColumnDef]="column">
-            <mat-header-cell *matHeaderCellDef mat-sort-header>
+<app-scroll-container [more]="hasMore()" [scrollOffset]="2500" 
+                      [scrollDelay]="3000" (scrolled)="handleScroll($event)">
+    <mat-table [dataSource]="!filterString ? userStore: filterUser" matSort>
+        <ng-container *ngFor="let column of displayColumns" 
+                      [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef mat-sort-header 
+                              (click)="columnSelected(column)">
                 {{column | titlecase}}
             </mat-header-cell>
-            
-            <mat-cell  *matCellDef="let item">
-                 <span *ngIf="column !== 'actions'">{{item[column]}}</span>
-                 <span *ngIf="column === 'actions'">
+            <mat-cell *matCellDef="let item ">
+                <span *ngIf="column !== 'actions'">{{item[column]}}</span>
+                <span *ngIf="column === 'actions'">
                     <button class="delete-button" mat-icon-button color="warn" 
-                    (click)="confirmDialog(item)">
+                            (click)="confirmDialog(item)">
                         <mat-icon>delete</mat-icon>
                     </button>
                     <!--Edit Button-->
-                <button class="edit-button" mat-icon-button color="primary" 
-                (click)="openDialog('Update',item[column])">
-            <mat-icon>edit</mat-icon>
-
-        </button>
-                     
-                 </span>
+                    <button class="edit-button" mat-icon-button color="primary"
+                            (click)="editAddUser(null, true, item)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </span>
             </mat-cell>
-          
         </ng-container>
-        <mat-header-row 
-            *matHeaderRowDef="displayColumns; sticky:true">
+        <mat-header-row *matHeaderRowDef="displayColumns; sticky:true">
         </mat-header-row>
         <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
-        
-    </mat-table>              
+    </mat-table>
 </app-scroll-container>
+<ngx-spinner></ngx-spinner>

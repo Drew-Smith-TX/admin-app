@@ -17,7 +17,9 @@ span.add-button {
   
    button {
     margin-top: $margin-top;
+    cursor: pointer;
   }
+
   //  Search field
    mat-form-field.options {
     margin-top: $margin-top;
@@ -28,3 +30,21 @@ span.add-button {
       margin-top: $margin-top;
     }
   }}
+  .wrapper {
+    width: 100%;
+    height: 100%;
+  }
+ 
+  .overlay {
+    position: absolute;
+    z-index: 1002;
+    background-color: rgba(255, 255, 255, 0.5);
+    width: 100%;
+    height: 100%;
+  }
+  
+  .spinner-wrapper {
+    display: flex;
+    justify-content: center;
+    justify-items: center;
+  }

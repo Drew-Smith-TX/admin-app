@@ -18,19 +18,19 @@ enum ScrollListener {
 })
 export class ScrollContainerComponent implements OnInit, OnChanges {
 
-  private _element: Element;
-  private _window: Element;
+  private element: Element;
+  private window: Element;
   public scrollTop = 0;
   @Input() more = true;
-  @Input() scrollDelay = 2000;
+  @Input() scrollDelay = 500;
   @Input() scrollOffset = 1000;
   @Output() scrolled: EventEmitter<boolean> = new EventEmitter<boolean>();
-  @HostListener('scroll') _scroll: Function;
-  @HostListener('window:scroll') _windowScroll: Function;
+  @HostListener('scroll') scroll: Function;
+  @HostListener('window:scroll') windowScroll: Function;
 
   constructor(private elRef: ElementRef) {
-    this._element = this.elRef.nativeElement;
-    this._window = document.documentElement as Element;
+    this.element = this.elRef.nativeElement;
+    this.window = document.documentElement as Element;
   }
 
   ngOnInit() {
@@ -44,7 +44,7 @@ export class ScrollContainerComponent implements OnInit, OnChanges {
   }
 
   setThrottle() {
-    this._scroll = this._windowScroll = _throttle(this.handleScroll, this.scrollDelay);
+    this.scroll = this.windowScroll = _throttle(this.handleScroll, this.scrollDelay);
   }
 
   getListener = () => this.elRef.nativeElement.clientHeight === this.elRef.nativeElement.scrollHeight
@@ -59,10 +59,11 @@ export class ScrollContainerComponent implements OnInit, OnChanges {
       && this.getScrollDirection(e.scrollTop) === ScrollDirection.DOWN
       && this.roundTo(e.clientHeight) === this.roundTo(e.scrollHeight - e.scrollTop);
     this.scrollTop = e.scrollTop;
+    console.log(this.scrollTop)
     return scrolled;
   }
 
   handleScroll = () => this.getListener() === ScrollListener.HOST
-    ? this.scrolled.emit( this.canScroll(this._element) )
-    : this.scrolled.emit( this.canScroll(this._window) )
+    ? this.scrolled.emit( this.canScroll(this.element) )
+    : this.scrolled.emit( this.canScroll(this.window) )
 }

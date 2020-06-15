@@ -11,17 +11,25 @@ import { ServerService } from './_service/server.service';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule} from '@angular/forms';
-
+import { NgxsFormPluginModule } from '@ngxs/form-plugin';
 import { ReactiveFormsModule } from '@angular/forms';
 import {FlexLayoutModule} from '@angular/flex-layout';
-
 import { DialogBoxComponent } from './dialog-box/_customer_dialogs/edit-customer/dialog-box.component';
 import { NewCustomerComponent } from './dialog-box/_customer_dialogs/new-customer/new-customer.component';
 import { ConfirmationDialogComponent } from './dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
 import { AddProjectDialogComponent } from './dialog-box/addProjectDialog/addProjectDialog.component';
 import { FourZeroFourComponent } from './four-zero-four/four-zero-four.component';
 import { HelpComponent } from './nav/help/help.component';
+import {NgxsModule} from '@ngxs/store';
+import { NgxsResetPluginModule } from 'ngxs-reset-plugin';
 
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import { UserState } from './home/users/_store/user.state';
+import {UserService} from './home/users/_store/user.service'
+import { environment } from 'src/environments/environment';
+import { FormState } from './home/users/_store/form.state';
+import { AddUserDialogComponent } from './home/users/dialogs/add-user-dialog/add-user-dialog.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -33,11 +41,15 @@ import { HelpComponent } from './nav/help/help.component';
     AddProjectDialogComponent,
     FourZeroFourComponent,
     HelpComponent,
+    AddUserDialogComponent
   ],
   imports: [
     BrowserModule,
-    
-    
+    NgxsModule.forRoot([UserState, FormState]),
+    NgxsFormPluginModule.forRoot(),
+    NgxsReduxDevtoolsPluginModule.forRoot({disabled: true}),
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsFormPluginModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     MaterialsModule,
@@ -49,7 +61,8 @@ import { HelpComponent } from './nav/help/help.component';
     
   ],
   providers: [CardService,
-    ServerService],
+    ServerService,
+    UserService],
   bootstrap: [AppComponent],
   entryComponents: [DialogBoxComponent]
 })

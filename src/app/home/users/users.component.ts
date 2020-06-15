@@ -10,6 +10,21 @@ import {MatDialog} from '@angular/material/dialog';
 import {ConfirmationDialogComponent} from '../../dialog-box/confirm/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmDialogModel } from '../../_models/confirm-dialog-model';
 import { ToastService } from 'src/app/_service/toast.service';
+import { Store, Select } from '@ngxs/store';
+import { GetUsers, DeleteUser, AddUser, SearchUsers, ClearUsers, OrderUsersBy, SetSelectedUser, GetSelectedUser } from './_store/users.action';
+import { UserState, UserStateModel } from './_store/user.state';
+import { Observable } from 'rxjs';
+import {NgxSpinnerService} from 'ngx-spinner';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormModel } from 'src/app/_models/FormModel';
+import {FormArray} from '@angular/forms';
+import {StateReset, StateResetAll} from 'ngxs-reset-plugin';
+import { UserService } from './_store/user.service';
+import { AutofillMonitor } from '@angular/cdk/text-field';
+import { filter } from 'rxjs/operators';
+import { AddUserDialogComponent } from './dialogs/add-user-dialog/add-user-dialog.component';
+
+
 @Component({
   selector: 'app-users',
   templateUrl: './users.component.html',
@@ -18,19 +33,28 @@ import { ToastService } from 'src/app/_service/toast.service';
 export class UsersComponent implements OnInit , OnChanges{
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatTable, { static: true }) table: MatTable<any>;
+  @Select(UserState.getUserList) userStore: Observable<User[]>;
+  @Select(UserState.getSortedUser) filterUser: Observable<User[]>
+  @Select(UserState.getSelectedUser) selectedUser: Observable<User>;
+  
   dataSource: MatTableDataSource<User>;
   users: User[];
-  maxEntries: number;
-  beginningId = 0;
-  lastId = 20;
-  full = true;
-
-  displayColumns: string[] = ['id', 'first_name', 'last_name', 'email', 'gender', 'actions'];
+  maxEntries: number;   // Max entries of userlist
+  beginningId: number;  // first Id of userlist
+  lastId: number;       // Last Id of userlist
+  //full = true;          //
+  showSpinner = false;  // Boolean for showing loading spinner
+  filterString: string; // String to filter lazy loaded entries of table
+  newFormGroup: FormGroup;
+  direction = true;     // sort direction, asc = true, desc = false
+  displayColumns: string[] = ['id', 'firstName', 'lastName', 'email', 'gender', 'actions'];
   constructor(private head: HeaderService,
               private card: CardService,
-              private server: ServerService,
               private dialog: MatDialog,
-              private toast: ToastService) {
+              private toast: ToastService,
+              private store: Store,
+              private spinner: NgxSpinnerService,
+              ) {
     this.head.setNextTitle('User Management');
     this.maxEntries = this.card.cardList[3].total;
 
@@ -40,57 +64,102 @@ export class UsersComponent implements OnInit , OnChanges{
      this.getData();
    }
   ngOnInit(): void {
-
-    this.head.setNextTitle('User Management');
-    this.getData();
-
-  }
-  getData(){
-
-    this.server.getPaginatedUser(this.beginningId, this.lastId)
-      .subscribe((user: User[]) => {
-        if (user){
-          if (!this.users){
-            this.users = user;
-            console.log(this.users);
-          }else{
-            this.users = this.users.concat(user);
-          }
-          this.dataSource = new MatTableDataSource<User>(this.users);
-          this.dataSource.sort = this.sort;
-        }
-      });
     this.setBeginEnd();
-
+    this.head.setNextTitle('User Management');
+    //this.getData();
+    this.store.dispatch(new GetUsers(this.beginningId, this.lastId));
+  }
+  // formBuilderInit() {
+  //   const firstName = new FormControl('', Validators.required);
+  //   const lastName = new FormControl('', Validators.required);
+  //   const email = new FormControl('', Validators.required)
+  //   const gender = new FormControl('', null);
+  //   this.newFormGroup = new FormGroup({
+  //     user: new FormArray([
+  //       firstName,
+  //       lastName,
+  //       email,
+  //       gender
+  //     ])
+  //   });
+  // }
+//   get names(): FormArray {
+//     return this.newFormGroup.get('user') as FormArray;
+// }
+  getData(){
+      console.log(this.beginningId)
+      console.log(this.lastId)
+      this.setBeginEnd();
+      this.store.dispatch(new GetUsers(this.beginningId, this.lastId));
+      
   }
 
   setBeginEnd() {
-    if (this.lastId <= (this.maxEntries - 5)){
-      this.beginningId = this.lastId + 1;
-      this.lastId = this.lastId + 5;
-    }else
-      if (this.lastId >= this.maxEntries){
-        console.log('Max Entries Reached');
+    console.log(this.beginningId)
+    console.log(this.lastId)
+    console.log(this.maxEntries)
+    if(!this.beginningId && !this.lastId){
+      this.beginningId = 0;
+      this.lastId = 10;
     }else{
-       const newEnd = this.lastId + (this.maxEntries - this.lastId);
-    }
+      const entriesLeft = this.maxEntries - this.lastId;
+      console.log('entries left: ' + entriesLeft)
+      if(entriesLeft > 0 && entriesLeft > 10){
+        this.beginningId = this.lastId + 1;
+        this.lastId = this.lastId + 10;
+      }else if(entriesLeft < 10 && entriesLeft > 1){
+        this.beginningId = this.lastId;
+        this.lastId = this.maxEntries;
+      }else{
+        this.resetBeginEnd();
+      }
+  }
+    
+  }
+  resetBeginEnd(){
+    console.log('resetBeginEnd call')
+    this.beginningId = 0;
+    this.lastId = 10;
   }
   handleScroll(scrolled: boolean){
     // tslint:disable-next-line: no-console
     console.timeEnd('last scrolled');
-    scrolled ? this.getData() : _noop();
+    if(scrolled){
+      this.spinner.show();
+      setTimeout(()=>{
+        this.spinner.hide();
+      }, 2000);
+      
+      this.getData();
+      this.setBeginEnd();
+     
+      
+  
+    }
+    
+    //scrolled ? [this.getData(), this.showSpinner = true] : _noop();
     // tslint:disable-next-line: no-console
     console.time('last scrolled');
+    
   }
   hasMore = () => !this.dataSource || this.dataSource.data.length < this.maxEntries;
-  newUser() {
-
-  }
+  
   applyFilter(filterValue: string) {
-    filterValue = filterValue.trim().toLowerCase();
-    this.dataSource.filter = filterValue;
-
-
+    filterValue = filterValue.toLowerCase();
+    console.log('filter value is ' + filterValue)
+    if(!filterValue){
+      
+      this.filterString = null;
+      console.log('EMPTY REACHED')
+      this.ngOnInit()
+    }
+    else if( filterValue !== ''){
+      this.filterString = filterValue;
+      // filterValue = filterValue.trim().toLowerCase();
+      this.store.dispatch(new SearchUsers(filterValue));
+      console.log(this.userStore);
+    }
+   
   }
   openDialog(action, id) {
     console.log(id);
@@ -98,18 +167,32 @@ export class UsersComponent implements OnInit , OnChanges{
 
   onDelete(row) {
     console.log(row.id)
-    this.server.deleteUser(row.id).subscribe((result) => {
-    });
-    const index = this.dataSource.data.indexOf(row);
-    console.log(index)
-    this.dataSource.data.splice(index, 1);
-    this.dataSource._updateChangeSubscription();
-    this.toast.openToast('Deleted User: ' + row.first_name, 'close');
+    this.store.dispatch(new DeleteUser(row.id));
+    
+  }
+  editUserDialog(row: any) {
+    const title = 'Update User: ' + row.firstName;
+    console.log(title);
+  }
+  editAddUser(title: string, edit: any, user: User) {
+    const dialogTitle = title ? title : 'Edit User ' + user.firstName + ' ' + user.lastName; 
+    console.log(dialogTitle)
+    const dialogData = new FormModel(dialogTitle, edit, user);
+    const dialogRef = this.dialog.open(AddUserDialogComponent,{
+      data: dialogData,
+    })
+    dialogRef.afterClosed().subscribe(dialogResult =>{
+      const result = dialogResult;
+      console.log(result)
+      this.toast.openToast(
+        (result) ? ('Succesful: ' + dialogTitle): 
+                    ('Cancelled: ' + dialogTitle),
+                    'Close'
+      )
+    })
   }
   confirmDialog(row: any){
     const message = 'Confirm Delete: ' + row.first_name  + ' ' + row.last_name;
-    console.log(message);
-
     const dialogData = new ConfirmDialogModel('Confirm Delete of User.'
                                               , message);
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
@@ -122,15 +205,25 @@ export class UsersComponent implements OnInit , OnChanges{
        console.log(result);
        if (result === true) {
         this.onDelete(row);
-        //this.getData();
-        //this.toast.openToast('Deleted customer: ' + row.name, 'close');
-        //this.table.renderRows();
+        this.toast.openToast('Delete Successful', 'Close')
       }
       else{
         this.toast.openToast('Delete cancelled', 'Close');
       }
     });
-    this.ngOnInit();
+    this.table.renderRows();
+   
 
+  }
+  columnSelected(column: string){
+    console.log('this direction is : ' + this.direction)
+    this.direction = !this.direction;
+    const isNumber = isNaN(Number(this.userStore[column]));
+    this.store.dispatch(new OrderUsersBy(column, isNumber, this.direction));
+    this.table.renderRows();
+  }
+  onClear(searchString: string) {
+    this.filterString = '';
+    searchString = '';
   }
 }
