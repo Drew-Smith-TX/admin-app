@@ -1,4 +1,3 @@
-
 $display: flex;
 $flex-direction: row;
 $justify-content: space-between;
@@ -14,14 +13,16 @@ span.add-button {
   margin-left: $margin-left-right;
   margin-right: $margin-left-right;
   align-items: $align-items;
-  
-   button {
+
+  button {
     margin-top: $margin-top;
     cursor: pointer;
   }
-
+mat-scroll-container{
+  justify-content: center;
+}
   //  Search field
-   mat-form-field.options {
+  mat-form-field.options {
     margin-top: $margin-top;
     > mat-label {
       margin-top: $margin-top;
@@ -29,22 +30,26 @@ span.add-button {
     > input.filter {
       margin-top: $margin-top;
     }
-  }}
-  .wrapper {
-    width: 100%;
-    height: 100%;
   }
+}
+ mat-header-cell,mat-cell {
  
-  .overlay {
-    position: absolute;
-    z-index: 1002;
-    background-color: rgba(255, 255, 255, 0.5);
-    width: 100%;
-    height: 100%;
-  }
-  
-  .spinner-wrapper {
-    display: flex;
-    justify-content: center;
-    justify-items: center;
-  }
+}
+.wrapper {
+  width: 100%;
+  height: 100%;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 1002;
+  background-color: rgba(255, 255, 255, 0.5);
+  width: 100%;
+  height: 100%;
+}
+
+.spinner-wrapper {
+  display: flex;
+  justify-content: center;
+  justify-items: center;
+}

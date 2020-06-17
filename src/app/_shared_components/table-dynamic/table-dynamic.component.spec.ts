@@ -3,21 +3,21 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import { DebugElement } from '@angular/core';
 
-import { EditUserComponent } from './edit-user.component';
+import { TableDynamicComponent } from './table-dynamic.component';
 
-describe('EditUserComponent', () => {
-  let component: EditUserComponent;
-  let fixture: ComponentFixture<EditUserComponent>;
+describe('TableDynamicComponent', () => {
+  let component: TableDynamicComponent;
+  let fixture: ComponentFixture<TableDynamicComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditUserComponent ]
+      declarations: [ TableDynamicComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditUserComponent);
+    fixture = TestBed.createComponent(TableDynamicComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

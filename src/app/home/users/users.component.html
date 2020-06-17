@@ -6,7 +6,8 @@
     <mat-form-field class="options" appearance="outline" color="primary">
         <mat-label>Search User</mat-label>
         <input #searchBar color="primary" class="filter" align="start" matInput 
-               (keyup.enter)="applyFilter(searchBar.value)" placeholder="Search" [(ngModel)]="filterString">
+               (keyup.enter)="applyFilter(searchBar.value)" placeholder="Search"
+               >
         <mat-icon-button matSuffix (click)="applyFilter(searchBar.value)">
             <mat-icon color="primary">search</mat-icon>
         </mat-icon-button>
@@ -16,9 +17,12 @@
         </mat-icon-button>
     </mat-form-field>
 </span>
-<app-scroll-container [more]="hasMore()" [scrollOffset]="2500" 
-                      [scrollDelay]="3000" (scrolled)="handleScroll($event)">
-    <mat-table [dataSource]="!filterString ? userStore: filterUser" matSort>
+<app-scroll-container fxLayout fxFlex fxFlexAlign="center"
+                      [more]="hasMore()" [scrollOffset]="2500" 
+                      [scrollDelay]="2000" (scrolled)="handleScroll($event)">
+    <span fxLayout fxFill fxLayoutAlign="space-around center">
+    <mat-table [dataSource]="!filterString ? userStore:
+               filterUser" matSort>
         <ng-container *ngFor="let column of displayColumns" 
                       [matColumnDef]="column">
             <mat-header-cell *matHeaderCellDef mat-sort-header 
@@ -44,5 +48,6 @@
         </mat-header-row>
         <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
     </mat-table>
+    </span>
 </app-scroll-container>
 <ngx-spinner></ngx-spinner>

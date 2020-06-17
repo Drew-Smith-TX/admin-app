@@ -44,14 +44,16 @@ export class ScrollContainerComponent implements OnInit, OnChanges {
   }
 
   setThrottle() {
-    this._scroll = this._windowScroll = _throttle(this.handleScroll, this.scrollDelay);
+    this._scroll = this._windowScroll = _throttle(this.handleScroll,
+                   this.scrollDelay);
   }
 
-  getListener = () => this.elRef.nativeElement.clientHeight === this.elRef.nativeElement.scrollHeight
-    ? ScrollListener.WINDOW
-    : ScrollListener.HOST
+  getListener = () => 
+    this.elRef.nativeElement.clientHeight === this.elRef.nativeElement.scrollHeight
+    ? ScrollListener.WINDOW : ScrollListener.HOST
 
-  roundTo = (from: number, to: number = this.scrollOffset) => Math.floor(from / to) * to;
+  roundTo = (from: number, to: number = this.scrollOffset) => 
+            Math.floor(from / to) * to;
   getScrollDirection = (st: number) => this.scrollTop <= st ? ScrollDirection.DOWN : ScrollDirection.UP;
 
   canScroll(e: Element): boolean {

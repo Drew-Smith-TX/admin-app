@@ -58,3 +58,6 @@ export class GetSelectedUser{
     static readonly type = '[User] Get';
 
 }
+export class ClearSortUsers{
+   static readonly type = 'any'
+}

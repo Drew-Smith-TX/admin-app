@@ -1,0 +1,27 @@
+<mat-table [dataSource]="!filterString ? store:
+               filterUser" matSort>
+        <ng-container *ngFor="let column of displayColumns" 
+                      [matColumnDef]="column">
+            <mat-header-cell *matHeaderCellDef mat-sort-header 
+                              (click)="columnSelected(column)">
+                {{column | titlecase}}
+            </mat-header-cell>
+            <mat-cell *matCellDef="let item ">
+                <span *ngIf="column !== 'actions'">{{item[column]}}</span>
+                <span *ngIf="column === 'actions'">
+                    <button class="delete-button" mat-icon-button color="warn" 
+                            (click)="confirmDialog(item)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <!--Edit Button-->
+                    <button class="edit-button" mat-icon-button color="primary"
+                            (click)="editAddUser(null, true, item)">
+                        <mat-icon>edit</mat-icon>
+                    </button>
+                </span>
+            </mat-cell>
+        </ng-container>
+        <mat-header-row *matHeaderRowDef="displayColumns; sticky:true">
+        </mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayColumns"></mat-row>
+    </mat-table>
